@@ -1,0 +1,26 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NameModels = void 0;
+var NameModels;
+(function (NameModels) {
+    NameModels["antecedent"] = "antecedent";
+    NameModels["compteBloque"] = "compteBloque";
+    NameModels["consultation"] = "consultation";
+    NameModels["dossierPatient"] = "dossierPatient";
+    NameModels["employer"] = "employer";
+    NameModels["historiqueMessage"] = "historiqueMessage";
+    NameModels["horaire"] = "horaire";
+    NameModels["infoClinique"] = "infoClinique";
+    NameModels["medecin"] = "medecin";
+    NameModels["message"] = "message";
+    NameModels["ordonnance"] = "ordonnance";
+    NameModels["patient"] = "patient";
+    NameModels["payement"] = "payement";
+    NameModels["personnel"] = "personnel";
+    NameModels["poste"] = "poste";
+    NameModels["rendezVous"] = "rendezVous";
+    NameModels["salle"] = "salle";
+    NameModels["tache"] = "tache";
+    NameModels["typeDeSalle"] = "typeDeSalle";
+    NameModels["typeRendezVous"] = "typeRendezVous";
+})(NameModels = exports.NameModels || (exports.NameModels = {}));
