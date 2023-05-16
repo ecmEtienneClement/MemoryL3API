@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import { env } from "process";
 import { Sequelize } from "sequelize";
 import InitModels from "../models/initModels/initModels";
+import { InsertDataInitDb } from "../models/initModels/InsertDefaultData";
 
 dotenv.config();
 
@@ -26,6 +27,8 @@ export default async () => {
       sequelize
         .sync({ force: false })
         .then((dataSequelize) => {
+          //
+          InsertDataInitDb.initialiseurDefaultData(dataSequelize);
           //
           InitModels.addModelsList(dataSequelize);
           //

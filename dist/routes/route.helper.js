@@ -27,6 +27,10 @@ const getParamEmail = (req) => {
     const email = req.params.em;
     return email ? email : null;
 };
+//TODO GET MODEL PATH
+const getModelPath = (req) => {
+    return req.params.modelPath;
+};
 //TODO VRF USEROWNER
 const vrfUserOwner = (req, idUserOwnerRessouce, authorizationAdmin) => {
     const token = req.headers.authorization.split(" ")[1];
@@ -111,6 +115,7 @@ const pwdIsValid = (pwd) => {
 const routesHelpers = {
     getParamId,
     getParamEmail,
+    getModelPath,
     getHashPwd,
     vrfUserOwner,
 };

@@ -7,8 +7,12 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const connexionDB_1 = __importDefault(require("./connexionDB/connexionDB"));
 const routeur_routes_1 = __importDefault(require("./routes/routeur.routes"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 //
+app.use((0, cors_1.default)({
+    origin: "http://127.0.0.1:4200",
+}));
 app.use(body_parser_1.default.json());
 // Connexion a la base de donnée
 (0, connexionDB_1.default)();

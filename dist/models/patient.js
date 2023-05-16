@@ -72,12 +72,6 @@ exports.default = (sequelize, dataTypes) => {
         telephone: {
             type: dataTypes.STRING,
             allowNull: false,
-            get() {
-                return this.getDataValue("telephone").split(",");
-            },
-            set(data) {
-                this.setDataValue("telephone", data.join());
-            },
             unique: {
                 name: "numero",
                 msg: validatorMessages_1.ValidatorMessages.uniqueMsg("cet numéro"),
@@ -113,7 +107,7 @@ exports.default = (sequelize, dataTypes) => {
         },
         //TODO
         groupeSanguin: {
-            type: dataTypes.ENUM("AB-", "OO-", "OO+"),
+            type: dataTypes.ENUM("O-", "O+", 'B-', 'A-', 'AB+', 'AB-'),
             allowNull: false,
             validate: {
                 notEmpty: { msg: validatorMessages_1.ValidatorMessages.notEmptyMsg("Le groupe sanguin ") },

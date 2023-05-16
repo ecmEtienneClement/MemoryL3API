@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import InitModels from "../../models/initModels/initModels";
 import routeErrors from "../route.errors";
 import routesHelpers from "../route.helper";
+import { NameModelPathSave } from "../routeurController/router.crtl.path";
 
 //
 const getModel = () => {
@@ -15,7 +16,10 @@ const createEntitie = async (req: Request, res: Response) => {
     const dataEntitie = await getModel().create({
       ...req.body,
     });
-    return res.status(201).json(dataEntitie);
+    return res.status(201).json({
+      entitie: dataEntitie,
+      msg: `Ajout reussit : ${NameModelPathSave.getNameModel()}`,
+    });
   } catch (error) {
     routeErrors(error, res);
   }
@@ -27,7 +31,10 @@ const getAllEntities = async (req: Request, res: Response) => {
     const dataEntities = await getModel().findAll({
       include: { all: true },
     });
-    return res.json(dataEntities);
+    return res.json({
+      entities: dataEntities,
+      msg: `Chargement reussit : ${NameModelPathSave.getNameModel()}`,
+    });
   } catch (error) {
     routeErrors(error, res);
   }
@@ -43,7 +50,10 @@ const getEntitieById = async (req: Request, res: Response) => {
     });
     //
     return dataEntitie
-      ? res.json(dataEntitie)
+      ? res.json({
+          entitie: dataEntitie,
+          msg: `Chargement reussit : ${NameModelPathSave.getNameModel()}`,
+        })
       : res.status(404).json({ message: messageEntitieNotFound });
   } catch (error) {
     routeErrors(error, res);
@@ -78,7 +88,9 @@ const deleteEntitieById = async (req: Request, res: Response) => {
     }
     //
     await dataEntitie.destroy();
-    return res.json({ deleted: true });
+    return res.json({
+      msg: `Suppression reussit : ${NameModelPathSave.getNameModel()}`,
+    });
   } catch (error) {
     routeErrors(error, res);
   }
@@ -88,7 +100,9 @@ const deleteEntitieById = async (req: Request, res: Response) => {
 const deleteAllEntities = async (req: Request, res: Response) => {
   try {
     await getModel().drop();
-    return res.json({ deleted: true });
+    return res.json({
+      msg: `Suppression reussit : ${NameModelPathSave.getNameModel()}`,
+    });
   } catch (error) {
     routeErrors(error, res);
   }

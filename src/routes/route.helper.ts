@@ -15,6 +15,10 @@ const getParamEmail = (req: Request): string | null => {
   const email = req.params.em;
   return email ? email : null;
 };
+//TODO GET MODEL PATH
+const getModelPath = (req: Request): string | null => {
+  return req.params.modelPath;
+};
 //TODO VRF USEROWNER
 const vrfUserOwner = (
   req: Request,
@@ -108,6 +112,7 @@ const pwdIsValid = (pwd: string): boolean => {
 const routesHelpers = {
   getParamId,
   getParamEmail,
+  getModelPath,
   getHashPwd,
   vrfUserOwner,
 };

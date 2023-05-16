@@ -16,6 +16,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const process_1 = require("process");
 const sequelize_1 = require("sequelize");
 const initModels_1 = __importDefault(require("../models/initModels/initModels"));
+const InsertDefaultData_1 = require("../models/initModels/InsertDefaultData");
 dotenv_1.default.config();
 exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     const sequelize = new sequelize_1.Sequelize({
@@ -35,6 +36,8 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
             sequelize
                 .sync({ force: false })
                 .then((dataSequelize) => {
+                //
+                InsertDefaultData_1.InsertDataInitDb.initialiseurDefaultData(dataSequelize);
                 //
                 initModels_1.default.addModelsList(dataSequelize);
                 //

@@ -18,11 +18,8 @@ const antecedent_1 = __importDefault(require("../antecedent"));
 const compteBloque_1 = __importDefault(require("../compteBloque"));
 const consultation_1 = __importDefault(require("../consultation"));
 const dossierPatient_1 = __importDefault(require("../dossierPatient"));
-const employer_1 = __importDefault(require("../employer"));
 const historiqueMessage_1 = __importDefault(require("../historiqueMessage"));
-const horaire_1 = __importDefault(require("../horaire"));
 const infoClinique_1 = __importDefault(require("../infoClinique"));
-const medecin_1 = __importDefault(require("../medecin"));
 const message_1 = __importDefault(require("../message"));
 const ordonnance_1 = __importDefault(require("../ordonnance"));
 const patient_1 = __importDefault(require("../patient"));
@@ -45,11 +42,8 @@ class InitModels {
                 (0, compteBloque_1.default)(sequelize, sequelize_1.DataTypes),
                 (0, consultation_1.default)(sequelize, sequelize_1.DataTypes),
                 (0, dossierPatient_1.default)(sequelize, sequelize_1.DataTypes),
-                (0, employer_1.default)(sequelize, sequelize_1.DataTypes),
                 (0, historiqueMessage_1.default)(sequelize, sequelize_1.DataTypes),
-                (0, horaire_1.default)(sequelize, sequelize_1.DataTypes),
                 (0, infoClinique_1.default)(sequelize, sequelize_1.DataTypes),
-                (0, medecin_1.default)(sequelize, sequelize_1.DataTypes),
                 (0, message_1.default)(sequelize, sequelize_1.DataTypes),
                 (0, ordonnance_1.default)(sequelize, sequelize_1.DataTypes),
                 (0, patient_1.default)(sequelize, sequelize_1.DataTypes),
@@ -80,10 +74,7 @@ class InitModels {
             const compteBloque = models.CompteBloque;
             const consultation = models.Consultation;
             const dossierPatient = models.DossierPatient;
-            const employer = models.Employer;
             const historiqueMessage = models.HistoriqueMessage;
-            const horaire = models.Horaire;
-            const medecin = models.Medecin;
             const message = models.Message;
             const ordonnance = models.Ordonnance;
             const patient = models.Patient;
@@ -95,20 +86,13 @@ class InitModels {
             const tache = models.Tache;
             const typeDeSalle = models.TypeDeSalle;
             const typeRendezVous = models.TypeRendezVous;
-            //TODO [6] RELATIONS PERSONNEL
+            //TODO [10] RELATIONS PERSONNEL
             //POSTE  <== PERSONNEL
             poste.hasMany(personnel, {
-                foreignKey: { allowNull: false, name: "poste", field: "poste" },
+                foreignKey: { allowNull: false, name: "profil", field: "profil" },
             });
             personnel.belongsTo(poste, {
-                foreignKey: { allowNull: false, name: "poste", field: "poste" },
-            });
-            //HORAIRE  <== PERSONNEL
-            horaire.hasMany(personnel, {
-                foreignKey: { allowNull: false, name: "horaire", field: "horaire" },
-            });
-            personnel.belongsTo(horaire, {
-                foreignKey: { allowNull: false, name: "horaire", field: "horaire" },
+                foreignKey: { allowNull: false, name: "profil", field: "profil" },
             });
             //COMPTE_BLOQUER  <== PERSONNEL(ADMIN)
             personnel.hasMany(compteBloque, {
@@ -138,87 +122,71 @@ class InitModels {
             personnel.belongsTo(personnel, {
                 foreignKey: { allowNull: true, name: "admin", field: "admin" },
             });
-            //TODO [4] RELATIONS EMPLOYER
-            //PAYEMENT  <== EMPLOYER(SECRETAIRE)
-            employer.hasMany(payement, {
+            //PAYEMENT  <== PERSONNEL(SECRETAIRE)
+            personnel.hasMany(payement, {
                 foreignKey: {
                     allowNull: false,
                     name: "secretaire",
                     field: "secretaire",
                 },
             });
-            payement.belongsTo(employer, {
+            payement.belongsTo(personnel, {
                 foreignKey: {
                     allowNull: false,
                     name: "secretaire",
                     field: "secretaire",
                 },
             });
-            //TACHE  <== EMPLOYER(INFIRMIER ... ETC)
-            employer.hasMany(tache, {
+            //TACHE  <== PERSONNEL(INFIRMIER ... ETC)
+            personnel.hasMany(tache, {
                 foreignKey: { allowNull: false, name: "infirmier", field: "infirmier" },
             });
-            tache.belongsTo(employer, {
+            tache.belongsTo(personnel, {
                 foreignKey: { allowNull: false, name: "infirmier", field: "infirmier" },
             });
-            //RENDEZ-VOUS  <== EMPLOYER(SECRETAIRE)
-            employer.hasMany(rendezVous, {
+            //RENDEZ-VOUS  <== PERSONNEL(SECRETAIRE)
+            personnel.hasMany(rendezVous, {
                 foreignKey: {
                     allowNull: false,
                     name: "secretaire",
                     field: "secretaire",
                 },
             });
-            rendezVous.belongsTo(employer, {
+            rendezVous.belongsTo(personnel, {
                 foreignKey: {
                     allowNull: false,
                     name: "secretaire",
                     field: "secretaire",
                 },
             });
-            //DOSSIER-PATIENT  <== EMPLOYER(SECRETAIRE)
-            employer.hasMany(dossierPatient, {
-                foreignKey: {
-                    allowNull: false,
-                    name: "secretaire",
-                    field: "secretaire",
-                },
+            //TODO [4] RELATIONS PERSONNEL
+            //DOSSIER-PATIENT  <== PERSONNEL
+            personnel.hasMany(dossierPatient, {
+                foreignKey: { allowNull: false, name: "personnel", field: "personnel" },
             });
-            dossierPatient.belongsTo(employer, {
-                foreignKey: {
-                    allowNull: false,
-                    name: "secretaire",
-                    field: "secretaire",
-                },
+            dossierPatient.belongsTo(personnel, {
+                foreignKey: { allowNull: false, name: "personnel", field: "personnel" },
             });
-            //TODO [4] RELATIONS MEDECIN
-            //DOSSIER-PATIENT  <== MEDECIN
-            medecin.hasMany(dossierPatient, {
-                foreignKey: { allowNull: false, name: "medecin", field: "medecin" },
+            //ORDONNANCE  <== PERSONNEL
+            personnel.hasMany(ordonnance, {
+                foreignKey: { allowNull: false, name: "personnel", field: "personnel" },
             });
-            dossierPatient.belongsTo(medecin, {
-                foreignKey: { allowNull: false, name: "medecin", field: "medecin" },
+            ordonnance.belongsTo(personnel, {
+                foreignKey: { allowNull: false, name: "personnel", field: "personnel" },
             });
-            //ORDONNANCE  <== MEDECIN
-            medecin.hasMany(ordonnance, {
-                foreignKey: { allowNull: false, name: "medecin", field: "medecin" },
+            //CONSULTATION  <== PERSONNEL
+            personnel.hasMany(consultation, {
+                foreignKey: { allowNull: false, name: "personnel", field: "personnel" },
             });
-            ordonnance.belongsTo(medecin, {
-                foreignKey: { allowNull: false, name: "medecin", field: "medecin" },
+            consultation.belongsTo(personnel, {
+                foreignKey: { allowNull: false, name: "personnel", field: "personnel" },
             });
-            //CONSULTATION  <== MEDECIN
-            medecin.hasMany(consultation, {
-                foreignKey: { allowNull: false, name: "medecin", field: "medecin" },
+            //RENDEZ-VOUS  <== PERSONNEL
+            personnel.hasMany(rendezVous, {
+                foreignKey: { allowNull: false, name: "personnel", field: "personnel" },
             });
-            consultation.belongsTo(medecin, {
-                foreignKey: { allowNull: false, name: "medecin", field: "medecin" },
-            });
-            //RENDEZ-VOUS  <== MEDECIN
-            medecin.hasMany(rendezVous, {
-                foreignKey: { allowNull: false, name: "medecin", field: "medecin" },
-            });
-            rendezVous.belongsTo(medecin, {
-                foreignKey: { allowNull: false, name: "medecin", field: "medecin" },
+            rendezVous.belongsTo(personnel, {
+                foreignKey: { allowNull: false, name: "personnel", field: "personnel" },
             });
             //TODO [5] RELATIONS DOSSIER PATIENT
             //ANTECEDENT  <== DOSSIER PATIENT
@@ -296,21 +264,20 @@ class InitModels {
                     field: "dossierPatient",
                 },
             });
+            //DOSSIER PATIENT  <== SALLE
+            salle.hasMany(dossierPatient, {
+                foreignKey: { allowNull: false, name: "salle", field: "salle" },
+            });
+            dossierPatient.belongsTo(salle, {
+                foreignKey: { allowNull: false, name: "salle", field: "salle" },
+            });
             //TODO [1] RELATION PATIENT
             //DOSSIER PATIENT  <== PATIENT
-            patient.hasOne(dossierPatient, {
+            patient.hasMany(dossierPatient, {
                 foreignKey: { allowNull: false, name: "patient", field: "patient" },
             });
             dossierPatient.belongsTo(patient, {
                 foreignKey: { allowNull: false, name: "patient", field: "patient" },
-            });
-            //TODO [1] RELATION SALLE
-            //PATIENT  <== SALLE
-            salle.hasMany(patient, {
-                foreignKey: { allowNull: false, name: "salle", field: "salle" },
-            });
-            patient.belongsTo(salle, {
-                foreignKey: { allowNull: false, name: "salle", field: "salle" },
             });
             //TODO [1] RELATION TYPE DE SALLE
             //SALLE  <== TYPE DE SALLE
@@ -373,11 +340,8 @@ InitModels.addModelsList = (sequelize) => {
     const compteBloque = models.CompteBloque;
     const consultation = models.Consultation;
     const dossierPatient = models.DossierPatient;
-    const employer = models.Employer;
     const historiqueMessage = models.HistoriqueMessage;
-    const horaire = models.Horaire;
     const infoClinique = models.InfoClinique;
-    const medecin = models.Medecin;
     const message = models.Message;
     const ordonnance = models.Ordonnance;
     const patient = models.Patient;
@@ -394,11 +358,8 @@ InitModels.addModelsList = (sequelize) => {
     _a.modelsList.set(nameModels_1.NameModels.compteBloque, compteBloque);
     _a.modelsList.set(nameModels_1.NameModels.consultation, consultation);
     _a.modelsList.set(nameModels_1.NameModels.dossierPatient, dossierPatient);
-    _a.modelsList.set(nameModels_1.NameModels.employer, employer);
     _a.modelsList.set(nameModels_1.NameModels.historiqueMessage, historiqueMessage);
-    _a.modelsList.set(nameModels_1.NameModels.horaire, horaire);
     _a.modelsList.set(nameModels_1.NameModels.infoClinique, infoClinique);
-    _a.modelsList.set(nameModels_1.NameModels.medecin, medecin);
     _a.modelsList.set(nameModels_1.NameModels.message, message);
     _a.modelsList.set(nameModels_1.NameModels.ordonnance, ordonnance);
     _a.modelsList.set(nameModels_1.NameModels.patient, patient);

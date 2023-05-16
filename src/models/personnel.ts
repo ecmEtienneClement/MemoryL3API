@@ -101,6 +101,36 @@ export default (sequelize: Sequelize, dataTypes: any) => {
       },
     },
     //TODO
+    jour: {
+      type: dataTypes.STRING,
+      allowNull: false,
+      get() {
+        return this.getDataValue("jour").split(",");
+      },
+      set(data: any) {
+        this.setDataValue("jour", data.join());
+      },
+      validate: {
+        notEmpty: { msg: ValidatorMessages.notEmptyMsg("Le jour") },
+        notNull: { msg: ValidatorMessages.notNullMsg("Le jour") },
+      },
+    },
+      //TODO
+    salaire: {
+      type: dataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: ValidatorMessages.notEmptyMsg("Le salaire") },
+        notNull: { msg: ValidatorMessages.notNullMsg("Le salaire") },
+      },
+    },
+    //TODO
+    specialisation: {
+      type: dataTypes.STRING,
+      allowNull: true,
+     
+    },
+    //TODO
     mdp: {
       type: dataTypes.STRING,
       allowNull: false,
@@ -110,12 +140,6 @@ export default (sequelize: Sequelize, dataTypes: any) => {
         },
         notNull: { msg: ValidatorMessages.notNullMsg("Le mot de passe") },
       },
-    },
-    //TODO
-    role: {
-      type: dataTypes.ENUM("super-admin", "admin", "employer"),
-      allowNull: false,
-      defaultValue: "employer",
     },
   });
 };
