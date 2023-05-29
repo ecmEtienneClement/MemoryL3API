@@ -2,11 +2,16 @@ import { Sequelize } from "sequelize";
 import { ValidatorMessages } from "./messageModels/validatorMessages";
 export default (sequelize: Sequelize, dataTypes: any) => {
   sequelize.define("DossierPatient", {
+     //TODO
+    id: {
+      type: dataTypes.UUID,
+      primaryKey: true,
+      defaultValue: dataTypes.UUIDV4,
+    },
     //TODO
     numeroDossier: {
       type: dataTypes.STRING,
-      primaryKey: true,
-      allowNull: false,
+           allowNull: false,
       unique: {
         name: "numeroDossier",
         msg: ValidatorMessages.uniqueMsg("ce numero dossier"),
@@ -26,7 +31,7 @@ export default (sequelize: Sequelize, dataTypes: any) => {
         return this.getDataValue("motif").split(",");
       },
       set(data: any) {
-        this.setDataValue("motif", data.join());
+        this.setDataValue("motif", data.join() ? data.join() : data);
       },
       validate: {
         notEmpty: { msg: ValidatorMessages.notEmptyMsg("Le motif") },
@@ -41,7 +46,7 @@ export default (sequelize: Sequelize, dataTypes: any) => {
         return this.getDataValue("histoire").split(",");
       },
       set(data: any) {
-        this.setDataValue("histoire", data.join());
+        this.setDataValue("histoire", data.join() ? data.join() : data);
       },
     },
     //TODO
@@ -52,7 +57,7 @@ export default (sequelize: Sequelize, dataTypes: any) => {
         return this.getDataValue("terrain").split(",");
       },
       set(data: any) {
-        this.setDataValue("terrain", data.join());
+        this.setDataValue("terrain", data.join() ? data.join() : data);
       },
     },
   });

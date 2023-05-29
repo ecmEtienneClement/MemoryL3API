@@ -4,9 +4,14 @@ const validatorMessages_1 = require("./messageModels/validatorMessages");
 exports.default = (sequelize, dataTypes) => {
     sequelize.define("DossierPatient", {
         //TODO
+        id: {
+            type: dataTypes.UUID,
+            primaryKey: true,
+            defaultValue: dataTypes.UUIDV4,
+        },
+        //TODO
         numeroDossier: {
             type: dataTypes.STRING,
-            primaryKey: true,
             allowNull: false,
             unique: {
                 name: "numeroDossier",
@@ -27,7 +32,7 @@ exports.default = (sequelize, dataTypes) => {
                 return this.getDataValue("motif").split(",");
             },
             set(data) {
-                this.setDataValue("motif", data.join());
+                this.setDataValue("motif", data.join() ? data.join() : data);
             },
             validate: {
                 notEmpty: { msg: validatorMessages_1.ValidatorMessages.notEmptyMsg("Le motif") },
@@ -42,7 +47,7 @@ exports.default = (sequelize, dataTypes) => {
                 return this.getDataValue("histoire").split(",");
             },
             set(data) {
-                this.setDataValue("histoire", data.join());
+                this.setDataValue("histoire", data.join() ? data.join() : data);
             },
         },
         //TODO
@@ -53,7 +58,7 @@ exports.default = (sequelize, dataTypes) => {
                 return this.getDataValue("terrain").split(",");
             },
             set(data) {
-                this.setDataValue("terrain", data.join());
+                this.setDataValue("terrain", data.join() ? data.join() : data);
             },
         },
     });
