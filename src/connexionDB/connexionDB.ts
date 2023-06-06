@@ -25,7 +25,7 @@ export default async () => {
 
     if (dataInitModels) {
       sequelize
-        .sync({ force: true })
+        .sync({ force: false })
         .then((dataSequelize) => {
           //
           InsertDataInitDb.initialiseurDefaultData(dataSequelize);

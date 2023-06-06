@@ -10,12 +10,12 @@ export default (app: any) => {
   app.post("/api/clinique/signIn/", sign.signIn);
   app.use(
     "/api/clinique/:modelPath/",
-    //  auth,
-    ///  authAccesProfil,
+    auth,
+  //  authAccesProfil,
     RouterCtrlPath,
     entitieRoutes
   );
-  app.use("**/**", (req: Request, res: Response) => { 
+  app.use("**/**", (req: Request, res: Response) => {
     res.status(404).json("Cette route n'existe pas !");
   });
 };

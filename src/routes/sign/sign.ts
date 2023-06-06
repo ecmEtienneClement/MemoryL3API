@@ -56,6 +56,7 @@ const signIn = async (req: Request, res: Response) => {
     }
     //
     const id = userSign.getDataValue("id");
+    const role = userSign.getDataValue("role");
     const nom = userSign.getDataValue("nom");
     const prenom = userSign.getDataValue("prenom");
     const ip = req.ip;
@@ -68,7 +69,7 @@ const signIn = async (req: Request, res: Response) => {
       email,
       ip,
       userAg,
-      token: jwt.sign({ id, email, ip, userAg }, env.SECRET_KEY, {
+      token: jwt.sign({ id, email, role, ip, userAg }, env.SECRET_KEY, {
         expiresIn: "3h",
         algorithm: "HS384",
         audience: "WEB APP",

@@ -54,8 +54,6 @@ export default (sequelize: Sequelize, dataTypes: any) => {
       validate: {
         notEmpty: { msg: ValidatorMessages.notEmptyMsg("L'age") },
         notNull: { msg: ValidatorMessages.notNullMsg("L'age") },
-        min: { args: [18], msg: ValidatorMessages.ageMinMsg() },
-        max: { args: [80], msg: ValidatorMessages.ageMinMsg() },
       },
     },
     //TODO
@@ -71,7 +69,7 @@ export default (sequelize: Sequelize, dataTypes: any) => {
     telephone: {
       type: dataTypes.STRING,
       allowNull: false,
-   
+
       unique: {
         name: "numero",
         msg: ValidatorMessages.uniqueMsg("cet numéro"),
@@ -107,7 +105,7 @@ export default (sequelize: Sequelize, dataTypes: any) => {
     },
     //TODO
     groupeSanguin: {
-      type: dataTypes.ENUM("O-", "O+",'B-','A-','AB+','AB-'),
+      type: dataTypes.ENUM("O-", "O+", "B-", "A-", "AB+", "AB-"),
       allowNull: false,
       validate: {
         notEmpty: { msg: ValidatorMessages.notEmptyMsg("Le groupe sanguin ") },

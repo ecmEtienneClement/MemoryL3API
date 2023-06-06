@@ -30,6 +30,7 @@ exports.default = (req, res, next) => {
         const userIpReq = req.ip;
         const userUserAgentReq = req.headers["user-agent"];
         const httpMethode = req.method;
+        console.log("role" + userRoleToken);
         // Controle du nivau d'acces du profil
         (0, CtrLevelAccesModels_1.default)(httpMethode, userRoleToken, modelPath, next);
         //Si bon

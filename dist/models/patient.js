@@ -55,8 +55,6 @@ exports.default = (sequelize, dataTypes) => {
             validate: {
                 notEmpty: { msg: validatorMessages_1.ValidatorMessages.notEmptyMsg("L'age") },
                 notNull: { msg: validatorMessages_1.ValidatorMessages.notNullMsg("L'age") },
-                min: { args: [18], msg: validatorMessages_1.ValidatorMessages.ageMinMsg() },
-                max: { args: [80], msg: validatorMessages_1.ValidatorMessages.ageMinMsg() },
             },
         },
         //TODO
@@ -107,7 +105,7 @@ exports.default = (sequelize, dataTypes) => {
         },
         //TODO
         groupeSanguin: {
-            type: dataTypes.ENUM("O-", "O+", 'B-', 'A-', 'AB+', 'AB-'),
+            type: dataTypes.ENUM("O-", "O+", "B-", "A-", "AB+", "AB-"),
             allowNull: false,
             validate: {
                 notEmpty: { msg: validatorMessages_1.ValidatorMessages.notEmptyMsg("Le groupe sanguin ") },

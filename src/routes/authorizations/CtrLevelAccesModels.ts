@@ -6,9 +6,8 @@ export default (
   nameModel: string,
   next: any
 ): boolean => {
-  const listModelsProfil: Map<string, LevelCRUD> = AllProfil.listProfil.get(
-    NamesProfiles.infirmier
-  );
+  const listModelsProfil: Map<string, LevelCRUD> =
+    AllProfil.listProfil.get(profile);
   //TODO
   //Cas ou le profil dans le token n'est pas sur la liste profil
   if (!listModelsProfil) {

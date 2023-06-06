@@ -65,6 +65,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         //
         const id = userSign.getDataValue("id");
+        const role = userSign.getDataValue("role");
         const nom = userSign.getDataValue("nom");
         const prenom = userSign.getDataValue("prenom");
         const ip = req.ip;
@@ -76,7 +77,7 @@ const signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             email,
             ip,
             userAg,
-            token: jsonwebtoken_1.default.sign({ id, email, ip, userAg }, process_1.env.SECRET_KEY, {
+            token: jsonwebtoken_1.default.sign({ id, email, role, ip, userAg }, process_1.env.SECRET_KEY, {
                 expiresIn: "3h",
                 algorithm: "HS384",
                 audience: "WEB APP",
